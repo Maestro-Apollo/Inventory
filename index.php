@@ -1,25 +1,6 @@
 <?php
 session_start();
-include('class/database.php');
-class profile extends database
-{
-    protected $link;
-    public function showProfile()
-    {
-        $sql = "select * from info_tbl";
-        $res = mysqli_query($this->link, $sql);
 
-
-        if (mysqli_num_rows($res) > 0) {
-            return $res;
-        } else {
-            return false;
-        }
-        # code...
-    }
-}
-$obj = new profile;
-$objShow = $obj->showProfile();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -94,18 +75,8 @@ $objShow = $obj->showProfile();
 
 
     <section>
-        <div class="container">
-            <div class="row">
-                <?php if (isset($objShow)) { ?>
-                <?php while ($row = mysqli_fetch_assoc($objShow)) { ?>
-                <div class="col-md-6 mt-4">
-                    <h3><?php echo $row['full_name']; ?> Summary</h3>
-                    <p><?php echo $row['summary']; ?></p>
-                </div>
-                <?php } ?>
-                <?php } ?>
-
-            </div>
+        <div class="container text-center">
+            <a href="./add-stock.php" class="btn log_btn">Add Stock Item</a>
         </div>
     </section>
 
