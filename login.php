@@ -12,15 +12,15 @@ class signInUp extends database
             $username = $_POST['username'];
             $password = $_POST['password'];
 
-            $sql = "select * from student_tbl where username = '$username' ";
+            $sql = "select * from admin where admin_username = '$username' ";
             $res = mysqli_query($this->link, $sql);
             if (mysqli_num_rows($res) > 0) {
                 $row = mysqli_fetch_assoc($res);
-                $pass = $row['password'];
+                $pass = $row['admin_password'];
 
                 if ($password == $pass) {
-                    $_SESSION['name'] = $username;
-                    header('location:profile.php');
+                    $_SESSION['admin'] = $username;
+                    header('location:index.php');
                     return $res;
                 } else {
                     $msg = "Wrong password";

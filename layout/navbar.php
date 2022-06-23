@@ -16,12 +16,12 @@
 
 
                     <!-- If the user is logged in and session is set then these nav option will show -->
-                    <?php if (isset($_SESSION['name'])) { ?>
+                    <?php if (isset($_SESSION['admin'])) { ?>
 
-                    <li class="nav-item p-1">
+                    <!-- <li class="nav-item p-1">
                         <a class="nav-link text-dark font-weight-bold" href="profile.php">Profile
                         </a>
-                    </li>
+                    </li> -->
                     <!-- <li class="nav-item p-1">
                         <a class="nav-link text-dark font-weight-bold" href="result.php">Result
                         </a>
@@ -42,6 +42,15 @@
 
 
 
+                    <?php } else if (isset($_SESSION['employee'])) { ?>
+                    <li class="nav-item p-1">
+                        <a class="nav-link text-dark font-weight-bold" href="list.php">Inventory List
+                        </a>
+                    <li class="nav-item p-1">
+                        <a class="nav-link text-dark font-weight-bold" href="logout.php">Logout
+                        </a>
+                    </li>
+                    </li>
                     <?php } else { ?>
                     <!-- These are when user is not logged in -->
                     <li class="nav-item p-1">
