@@ -14,6 +14,9 @@ class signInUp extends database
 
             $sql = "select * from admin where admin_username = '$username' ";
             $res = mysqli_query($this->link, $sql);
+
+            $sql2 = "SELECT * from employee_tbl where employee_username = '$username' ";
+            $res2 = mysqli_query($this->link, $sql2);
             if (mysqli_num_rows($res) > 0) {
                 $row = mysqli_fetch_assoc($res);
                 $pass = $row['admin_password'];
@@ -21,6 +24,18 @@ class signInUp extends database
                 if ($password == $pass) {
                     $_SESSION['admin'] = $username;
                     header('location:index.php');
+                    return $res;
+                } else {
+                    $msg = "Wrong password";
+                    return $msg;
+                }
+            } else if (mysqli_num_rows($res2) > 0) {
+                $row = mysqli_fetch_assoc($res2);
+                $pass = $row['employee_password'];
+
+                if ($password == $pass) {
+                    $_SESSION['name'] = $username;
+                    header('location:inventory-list.php');
                     return $res;
                 } else {
                     $msg = "Wrong password";

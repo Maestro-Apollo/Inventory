@@ -6,7 +6,7 @@ class database
     private $hostname = "localhost";
     private $username = "root";
     private $password = "";
-    private $dbname = "resume";
+    private $dbname = "inventory";
 
     // private $hostname = "remotemysql.com";
     // private $username = "u5CBLhyagE";

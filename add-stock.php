@@ -1,23 +1,22 @@
 <?php
 session_start();
 
-if (isset($_SESSION['name'])) {
+if (isset($_SESSION['admin'])) {
 } else {
     header('location:login.php');
 }
-include('class/database.php');
-class profile extends database
-{
-    protected $link;
-    public function showProfile()
-    {
+// include('class/database.php');
+// class profile extends database
+// {
+//     protected $link;
+//     public function showProfile()
+//     {
 
-        # code...
-    }
-}
-$obj = new profile;
-$objShow = $obj->showProfile();
-$row = mysqli_fetch_assoc($objShow);
+//         # code...
+//     }
+// }
+// $obj = new profile;
+// $objShow = $obj->showProfile();
 
 
 
@@ -33,6 +32,7 @@ $row = mysqli_fetch_assoc($objShow);
     <?php include('layout/style.php'); ?>
     <link rel="stylesheet" href="./css/site.css">
     <link rel="stylesheet" href="./css/richtext.min.css">
+    <link rel="stylesheet" href="./css/range.css">
     <style>
     .profileImage {
         height: 200px;
@@ -70,7 +70,7 @@ $row = mysqli_fetch_assoc($objShow);
     }
 
     body {
-        font-family: 'Raleway', sans-serif;
+        font-family: 'Lato', sans-serif;
     }
     </style>
 
@@ -87,7 +87,7 @@ $row = mysqli_fetch_assoc($objShow);
                 <div class="col-md-12">
                     <h3 class="float-left d-block font-weight-bold" style="color: #05445E"><span
                             class="text-secondary font-weight-light">Welcome |</span>
-                        <?php echo $row['full_name'] ?>
+                        Admin
                     </h3>
 
                     <div class="account bg-white mt-5 p-5 rounded">
@@ -97,12 +97,29 @@ $row = mysqli_fetch_assoc($objShow);
                             <div class="row mt-4">
                                 <div class="col-md-7">
                                     <label for="name" class="font-weight-bold">Name</label>
-                                    <input type="text" id="name" name="name" value="<?php echo $row['name']; ?>"
-                                        class="form-control bg-light">
+                                    <input type="text" id="name" name="name" class="form-control bg-light">
 
                                     <label for="barcode" class="font-weight-bold mt-4 mb-0">Barcode</label>
-                                    <input type="text" id="barcode" name="barcode"
-                                        value="<?php echo $row['barcode']; ?>" class="form-control bg-light">
+                                    <input type="text" id="barcode" name="barcode" class="form-control bg-light mb-3">
+
+                                    <label for="">Wholesale Price</label>
+                                    <div class="range mb-3">
+                                        <input type="range" name="wholesale" min="1" max="30" class="range1" value="15">
+                                        <output id="range">£15</output>
+                                    </div>
+                                    <input type="hidden" name="w-price" id="w-price">
+                                    <label for="">Retail Price</label>
+                                    <div class="range range-primary mb-3">
+                                        <input type="range" name="retail" min="1" max="30" class="range2" value="15">
+                                        <output id="rangePrimary">£15</output>
+                                    </div>
+                                    <input type="hidden" name="r-price" id="r-price">
+                                    <label for="">Quantity</label>
+                                    <div class="range range-success mb-3">
+                                        <input type="range" name="quantity" min="1" max="100" class="range3" value="50">
+                                        <output id="rangeSuccess">50</output>
+                                    </div>
+                                    <input type="hidden" name="quantity" id="quantity">
 
 
 
@@ -112,7 +129,7 @@ $row = mysqli_fetch_assoc($objShow);
                                 <div class="col-md-5 text-center">
 
                                     <img class="profileImage" onclick="triggerClick()" id="profileDisplay"
-                                        src="user_img/<?php echo $row['image']; ?>" alt="">
+                                        src="item_img/placeholder-16-9.jpg" alt="">
                                     <input type="file" accept="image/*" name="image" id="profileImage"
                                         onchange="displayImage(this)" style="display: none;">
                                     <p class="lead gap">Tap to upload image</p>
@@ -122,28 +139,17 @@ $row = mysqli_fetch_assoc($objShow);
 
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="qualification" class="font-weight-bold mt-4 mb-0">Qualification</label>
-                                    <textarea class="content2 mt-0"
-                                        name="qualification"><?php echo $row['qualification']; ?></textarea>
-
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="Skill" class="font-weight-bold mt-4 mb-0">Skill</label>
-                                    <textarea class="content3 mt-0" name="skill"><?php echo $row['skill']; ?></textarea>
-                                </div>
-                            </div>
-                            <input class="btn font-weight-bold log_btn btn-lg mt-5 mb-3" type="submit"
-                                value="Confirm Changes">
-                            </input>
-                        </form>
-                        <div id="output"></div>
 
                     </div>
+                    <input class="btn font-weight-bold log_btn btn-lg mt-5 mb-3" type="submit" value="Submit">
+                    </input>
+                    </form>
+                    <div id="output"></div>
 
                 </div>
+
             </div>
+        </div>
         </div>
     </section>
 
@@ -172,6 +178,32 @@ $row = mysqli_fetch_assoc($objShow);
             });
 
         });
+    })
+    </script>
+
+    <script>
+    $(document).ready(function() {
+        let range = $('.range1');
+        range.on('input', function() {
+            console.log(range.val());
+            $('#range').text('£' + range.val());
+            $('#w-price').val(range.val());
+        })
+
+        let range2 = $('.range2');
+        range2.on('input', function() {
+            console.log(range.val());
+            $('#rangePrimary').text('£' + range2.val());
+            $('#r-price').val(range2.val());
+        })
+
+        let range3 = $('.range3');
+        range3.on('input', function() {
+            console.log(range3.val());
+            $('#rangeSuccess').text(range3.val());
+            $('#quantity').val(range3.val());
+
+        })
     })
     </script>
 
